@@ -15,16 +15,31 @@ class GameFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val words = listOf("Android", "Activity", "Fragment", "Binding", "Safeargs")
-    private val secretWord = words.random().uppercase()
+    private var secretWord = words.random().uppercase()
     private var secretWordDisplay = "" // word to be displayed
     private var correctGuesses = "" // will hold correct letters in the form of string
     private var incorrectGuesses = ""
     private var livesLeft = 8
 
+    private val SECRET_WORD_KEY = "SWK"
+    private val SECRET_WORD_DISPLAY_KEY = "SWDK"
+    private val CORRECT_GUESSES_KEY = "CGK"
+    private val INCORRECT_GUESSES_KEY = "IGK"
+    private val LIVES_LEFT_KEY = "LLK"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if(savedInstanceState != null) {
+            secretWord = savedInstanceState.getString(SECRET_WORD_KEY).toString()
+            secretWordDisplay = savedInstanceState.getString(SECRET_WORD_DISPLAY_KEY).toString()
+            correctGuesses = savedInstanceState.getString(CORRECT_GUESSES_KEY).toString()
+            incorrectGuesses = savedInstanceState.getString(INCORRECT_GUESSES_KEY).toString()
+            livesLeft = savedInstanceState.getInt(LIVES_LEFT_KEY)
+        }
+
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         val rootView = binding.root
         secretWordDisplay = deriveSecretWordDisplay()
@@ -95,6 +110,15 @@ class GameFragment : Fragment() {
         } else {
             getString(R.string.lost_message, secretWord)
         }
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        savedInstanceState.putString(SECRET_WORD_KEY, secretWord)
+        savedInstanceState.putString(SECRET_WORD_DISPLAY_KEY, secretWordDisplay)
+        savedInstanceState.putString(CORRECT_GUESSES_KEY, correctGuesses)
+        savedInstanceState.putString(INCORRECT_GUESSES_KEY, incorrectGuesses)
+        savedInstanceState.putInt(LIVES_LEFT_KEY, livesLeft)
+        super.onSaveInstanceState(savedInstanceState)
     }
 
     override fun onDestroyView() {
