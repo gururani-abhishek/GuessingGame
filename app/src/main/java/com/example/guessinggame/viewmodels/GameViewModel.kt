@@ -1,18 +1,22 @@
 package com.example.guessinggame.viewmodels
 
 import android.content.res.Resources
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.guessinggame.R
 
 class GameViewModel() : ViewModel() {
-    val words = listOf("Android", "Activity", "Fragment", "Binding", "Safeargs")
+    private val words = listOf("Android", "Activity", "Fragment", "Binding", "Safeargs")
     var secretWord = words.random().uppercase()
     var secretWordDisplay = "" // word to be displayed
     var correctGuesses = "" // will hold correct letters in the form of string
     var incorrectGuesses = ""
     var livesLeft = 8
 
-    fun deriveSecretWordDisplay() : String {
+    init {
+        secretWordDisplay = deriveSecretWordDisplay()
+    }
+    private fun deriveSecretWordDisplay() : String {
         var display = ""
         secretWord.forEach {
             display += checkLetter(it.toString())
@@ -34,7 +38,7 @@ class GameViewModel() : ViewModel() {
                 secretWordDisplay = deriveSecretWordDisplay()
             }else {
                 livesLeft--
-                incorrectGuesses += guess
+                incorrectGuesses += "$guess "
             }
         }
     }
@@ -50,10 +54,11 @@ class GameViewModel() : ViewModel() {
     fun wonLostMessage() : String {
         return if(isWon()) {
             // this is wrong!!
-            Resources.getSystem().getString(R.string.won_message, secretWord)
+//            Resources.getSystem().getString(R.string.won_message, secretWord)
+            "Won"
         } else {
-            Resources.getSystem().getString(R.string.lost_message, secretWord)
+//            Resources.getSystem().getString(R.string.lost_message, secretWord)
+            "Lost"
         }
     }
-
 }

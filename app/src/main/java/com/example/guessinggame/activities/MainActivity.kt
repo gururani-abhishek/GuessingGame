@@ -2,6 +2,7 @@ package com.example.guessinggame.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.guessinggame.R
 import com.example.guessinggame.databinding.ActivityMainBinding
 

@@ -1,13 +1,12 @@
 package com.example.guessinggame.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.guessinggame.R
 import com.example.guessinggame.databinding.FragmentGameBinding
 import com.example.guessinggame.viewmodels.GameViewModel
@@ -27,7 +26,6 @@ class GameFragment : Fragment() {
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         // UI initialisation
         val rootView = binding.root
-        viewModel.secretWordDisplay = viewModel.deriveSecretWordDisplay()
         updateStats()
 
         // interaction with UI
@@ -40,7 +38,8 @@ class GameFragment : Fragment() {
             if(viewModel.isWon() || viewModel.isLost()) {
                 // move to the next fragment, make sure to pass the information
                 // of word and winning/losing
-                val action = GameFragmentDirections.actionGameFragmentToResultFragment(viewModel.wonLostMessage())
+                val wonLostTextMessage = getString(R.string.won_lost_message, viewModel.wonLostMessage(), viewModel.secretWord)
+                val action = GameFragmentDirections.actionGameFragmentToResultFragment(wonLostTextMessage)
                 val navController = rootView.findNavController()
                 navController.navigate(action)
             }

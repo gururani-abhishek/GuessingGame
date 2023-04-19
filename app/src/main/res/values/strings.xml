@@ -4,7 +4,6 @@
     <string name="bt_check_guess_hint">Guess!!</string>
     <string name="incorrect_guess_stats">Incorrect Guesses : %1$s</string>
     <string name="lives_left_stats">You have %1$d lives left.</string>
-    <string name="won_message">You WON!! The correct word was %1$s.</string>
-    <string name="lost_message">You LOST!! The correct word was %1$s.</string>
+    <string name="won_lost_message">You %1$s!! The correct word was %2$s.</string>
     <string name="result_fragment_done_btn_text">Play Again</string>
 </resources>
