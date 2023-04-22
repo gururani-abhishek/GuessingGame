@@ -2,23 +2,41 @@ package com.example.guessinggame.viewmodels
 
 import android.content.res.Resources
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.guessinggame.R
 
+// what are the properties that are affecting my UI or are triggering some method calls in UI controller?
+// : "secretWordDisplay", "incorrectGuesses", "livesLeft"
+
+// to the properties that are being used in Fragment, I want them to be read-only.
+// for that I can use backing property code structure.
 class GameViewModel() : ViewModel() {
     private val words = listOf("Android", "Activity", "Fragment", "Binding", "Safeargs")
-    var secretWord = words.random().uppercase()
-    var secretWordDisplay = "" // word to be displayed
-    var correctGuesses = "" // will hold correct letters in the form of string
-    var incorrectGuesses = ""
-    var livesLeft = 8
+    private var _secretWord = words.random().uppercase()
+    val secretWord get() = _secretWord
+
+    private var correctGuesses = "" // will hold correct letters in the form of string
+
+    private val _secretWordDisplay = MutableLiveData<String>() // word to be displayed
+    val secretWordDisplay : LiveData<String> get()= _secretWordDisplay
+
+    private val _incorrectGuesses = MutableLiveData("")
+    val incorrectGuesses : LiveData<String> get() = _incorrectGuesses
+
+    private val _livesLeft = MutableLiveData(8)
+    val livesLeft : LiveData<Int> get() = _livesLeft
+
+    private val _gameOver = MutableLiveData(false)
+    val gameOver : LiveData<Boolean> get() = _gameOver
 
     init {
-        secretWordDisplay = deriveSecretWordDisplay()
+        _secretWordDisplay.value = deriveSecretWordDisplay()
     }
     private fun deriveSecretWordDisplay() : String {
         var display = ""
-        secretWord.forEach {
+        _secretWord.forEach {
             display += checkLetter(it.toString())
         }
         return display
@@ -33,31 +51,30 @@ class GameViewModel() : ViewModel() {
 
     fun checkGuess(guess : String) {
         if(guess.length == 1) {
-            if(secretWord.contains(guess)) {
+            if(_secretWord.contains(guess)) {
                 correctGuesses += guess
-                secretWordDisplay = deriveSecretWordDisplay()
+                _secretWordDisplay.value = deriveSecretWordDisplay()
             }else {
-                livesLeft--
-                incorrectGuesses += "$guess "
+                _livesLeft.value = livesLeft.value?.minus(1)
+                _incorrectGuesses.value = incorrectGuesses.value?.plus("$guess ")
             }
+
+            _gameOver.value = (isWon() || isLost())
         }
     }
 
-    fun isWon() : Boolean {
-        return secretWordDisplay == secretWord
+    private fun isWon() : Boolean {
+        return _secretWord.equals(_secretWordDisplay)
     }
 
-    fun isLost() : Boolean {
-        return livesLeft == 0
+    private fun isLost() : Boolean {
+        return (_livesLeft.value ?: 0) <= 0
     }
 
     fun wonLostMessage() : String {
         return if(isWon()) {
-            // this is wrong!!
-//            Resources.getSystem().getString(R.string.won_message, secretWord)
             "Won"
         } else {
-//            Resources.getSystem().getString(R.string.lost_message, secretWord)
             "Lost"
         }
     }
