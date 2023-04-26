@@ -1,11 +1,8 @@
 package com.example.guessinggame.viewmodels
 
-import android.content.res.Resources
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.guessinggame.R
 
 // what are the properties that are affecting my UI or are triggering some method calls in UI controller?
 // : "secretWordDisplay", "incorrectGuesses", "livesLeft"
