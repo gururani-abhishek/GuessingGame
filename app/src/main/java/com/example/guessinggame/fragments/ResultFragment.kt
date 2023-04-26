@@ -30,7 +30,7 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // this should move to view model ->
+// this should move to view model ->
 //        binding.tvResult.text = ResultFragmentArgs.fromBundle(requireArguments()).result
 
         val result = ResultFragmentArgs.fromBundle(requireArguments()).result
