@@ -22,7 +22,13 @@ class ResultFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentResultBinding.inflate(inflater)
-        val rootView = binding.root
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // this should move to view model ->
 //        binding.tvResult.text = ResultFragmentArgs.fromBundle(requireArguments()).result
@@ -34,10 +40,9 @@ class ResultFragment : Fragment() {
         binding.tvResult.text = viewModel.finalResult
         binding.btnPlayAgain.setOnClickListener {
             val action = ResultFragmentDirections.actionResultFragmentToGameFragment()
-            val navController = rootView.findNavController()
+            val navController = binding.root.findNavController()
             navController.navigate(action)
         }
 
-        return rootView
     }
 }

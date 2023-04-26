@@ -25,8 +25,12 @@ class GameFragment : Fragment() {
         viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
         _binding = FragmentGameBinding.inflate(inflater, container, false)
-        // UI initialisation
-        val rootView = binding.root
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // observing live data property associated with livesLeft,
         viewModel.livesLeft.observe(viewLifecycleOwner, Observer { liveValueLivesLeft ->
@@ -58,18 +62,16 @@ class GameFragment : Fragment() {
             viewModel.checkGuess(binding.etInputLetter.text.toString().uppercase())
             binding.etInputLetter.text = null
         }
-
-        return rootView
     }
 
-    // this function updates the UI manually and now after LiveData integration, manually updating isn't required anymore.
+//    this function updates the UI manually and now after LiveData integration, manually updating isn't required anymore.
 //    private fun updateStats() {
 //        binding.tvWord.text = viewModel.secretWordDisplay
 //        binding.tvIncorrectGuesses.text = getString(R.string.incorrect_guess_stats, viewModel.incorrectGuesses)
 //        binding.tvLivesLeft.text = getString(R.string.lives_left_stats, viewModel.livesLeft)
 //    }
 
-    // to avoid memory leaks it's important that you release the _binding resource
+// to avoid memory leaks it's important that you release the _binding resource
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
