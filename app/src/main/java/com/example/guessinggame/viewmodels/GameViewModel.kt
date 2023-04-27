@@ -9,9 +9,8 @@ import androidx.lifecycle.ViewModel
 
 // to the properties that are being used in Fragment, I want them to be read-only.
 // for that I can use backing property code structure.
-class GameViewModel() : ViewModel() {
-    private val words = listOf("Android", "Activity", "Fragment", "Binding", "Safeargs")
-    private var _secretWord = words.random().uppercase()
+class GameViewModel(guessWord : String ) : ViewModel() {
+    private var _secretWord = guessWord.uppercase()
     val secretWord get() = _secretWord
 
     private var correctGuesses = "" // will hold correct letters in the form of string
