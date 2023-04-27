@@ -23,7 +23,6 @@ class ResultFragment : Fragment() {
     ): View? {
         _binding = FragmentResultBinding.inflate(inflater)
 
-
         return binding.root
     }
 
@@ -37,7 +36,12 @@ class ResultFragment : Fragment() {
         viewModelFactory = ResultViewModelFactory(result)
         viewModel = ViewModelProvider(this, viewModelFactory)[ResultViewModel::class.java]
 
-        binding.tvResult.text = viewModel.finalResult
+        // here fragment is interacting with TextView, plus fragment is fetching finalResult from the
+        // View Model(i.e. It's the fragment that updating the view)
+//        binding.tvResult.text = viewModel.finalResult
+
+        // assigning layout variable resultViewModel with the viewModel,
+        binding.resultViewModel = viewModel
         binding.btnPlayAgain.setOnClickListener {
             val action = ResultFragmentDirections.actionResultFragmentToGameFragment()
             val navController = binding.root.findNavController()

@@ -1,6 +1,7 @@
 package com.example.guessinggame.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ class GameFragment : Fragment() {
 
         // observing live data property associated with gameOver,
         viewModel.gameOver.observe(viewLifecycleOwner, Observer { liveValueGameOver ->
+            Log.wtf("fail", "value of : $liveValueGameOver")
             if(liveValueGameOver) {
                 val wonLostMsg = getString(R.string.won_lost_message, viewModel.wonLostMessage(), viewModel.secretWord)
                 val action = GameFragmentDirections.actionGameFragmentToResultFragment(wonLostMsg)

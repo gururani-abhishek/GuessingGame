@@ -33,7 +33,7 @@ class GameViewModel() : ViewModel() {
     }
     private fun deriveSecretWordDisplay() : String {
         var display = ""
-        _secretWord.forEach {
+        secretWord.forEach {
             display += checkLetter(it.toString())
         }
         return display
@@ -48,12 +48,12 @@ class GameViewModel() : ViewModel() {
 
     fun checkGuess(guess : String) {
         if(guess.length == 1) {
-            if(_secretWord.contains(guess)) {
+            if(secretWord.contains(guess)) {
                 correctGuesses += guess
                 _secretWordDisplay.value = deriveSecretWordDisplay()
             }else {
-                _livesLeft.value = livesLeft.value?.minus(1)
-                _incorrectGuesses.value = incorrectGuesses.value?.plus("$guess ")
+                _livesLeft.value = _livesLeft.value?.minus(1)
+                _incorrectGuesses.value = _incorrectGuesses.value?.plus("$guess ")
             }
 
             _gameOver.value = (isWon() || isLost())
@@ -61,11 +61,11 @@ class GameViewModel() : ViewModel() {
     }
 
     private fun isWon() : Boolean {
-        return _secretWord.equals(_secretWordDisplay)
+        return secretWord.equals(secretWordDisplay.value, true)
     }
 
     private fun isLost() : Boolean {
-        return (_livesLeft.value ?: 0) <= 0
+        return (livesLeft.value ?: 0) <= 0
     }
 
     fun wonLostMessage() : String {
