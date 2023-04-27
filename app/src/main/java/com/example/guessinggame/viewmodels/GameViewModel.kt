@@ -75,4 +75,8 @@ class GameViewModel() : ViewModel() {
             "Lost"
         }
     }
+
+    fun endGame() {
+        _gameOver.value = true
+    }
 }

@@ -1,49 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".fragments.GameFragment">
+<layout>
 
-    <TextView
-        android:id="@+id/tv_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="36sp"
-        android:letterSpacing="0.3"/>
+    <data>
+        <variable
+            name="gameViewModel"
+            type="com.example.guessinggame.viewmodels.GameViewModel" />
+    </data>
 
-    <TextView
-        android:layout_marginTop="16dp"
-        android:id="@+id/tv_lives_left"
-        android:layout_width="wrap_content"
-        android:layout_gravity="start"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".fragments.GameFragment">
 
-    <TextView
-        android:id="@+id/tv_incorrect_guesses"
-        android:layout_width="wrap_content"
-        android:textSize="16sp"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{gameViewModel.secretWordDisplay}"
+            android:textSize="36sp"
+            android:letterSpacing="0.3"/>
 
-    <EditText
-        android:id="@+id/et_input_letter"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:textSize="16sp"
-        android:inputType="text"
-        android:hint="@string/et_input_letter_hint"
-        android:maxLines="1"/>
+        <TextView
+            android:layout_marginTop="16dp"
+            android:id="@+id/tv_lives_left"
+            android:layout_width="wrap_content"
+            android:layout_gravity="start"
+            android:text="@{@string/lives_left_stats(gameViewModel.livesLeft)}"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"/>
 
-    <Button
-        android:id="@+id/bt_check_guess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bt_check_guess_hint"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"/>
+        <TextView
+            android:id="@+id/tv_incorrect_guesses"
+            android:layout_width="wrap_content"
+            android:text="@{@string/incorrect_guess_stats(gameViewModel.incorrectGuesses)}"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"/>
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/et_input_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:textSize="16sp"
+            android:inputType="text"
+            android:hint="@string/et_input_letter_hint"
+            android:maxLines="1"/>
+
+        <Button
+            android:id="@+id/bt_check_guess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bt_check_guess_hint"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end_game"
+            android:layout_gravity="center_horizontal"
+            android:onClick="@{() -> gameViewModel.endGame()}"
+            />
+
+    </LinearLayout>
+</layout>

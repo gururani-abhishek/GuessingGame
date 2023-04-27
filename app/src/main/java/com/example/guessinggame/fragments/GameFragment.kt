@@ -32,25 +32,28 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+// "GameFragment is assigning it's instantiated viewModel to data binding variable gameViewModel"
+        binding.gameViewModel = viewModel // assigning gameViewModel variable with instantiated viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        // observing live data property associated with livesLeft,
-        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { liveValueLivesLeft ->
-            binding.tvLivesLeft.text = getString(R.string.lives_left_stats, liveValueLivesLeft)
-        })
-
-        // observing live data property associated with incorrectGuesses,
-        viewModel.incorrectGuesses.observe(viewLifecycleOwner, Observer { liveValueIncorrectGuesses ->
-            binding.tvIncorrectGuesses.text = getString(R.string.incorrect_guess_stats, liveValueIncorrectGuesses)
-        })
-
-        // observing live data property associated with secretWordDisplay,
-        viewModel.secretWordDisplay.observe(viewLifecycleOwner, Observer { liveValueSecretWordDisplay ->
-            binding.tvWord.text = liveValueSecretWordDisplay
-        })
+        // observing these values and updating them using data binding.
+//        // observing live data property associated with livesLeft,
+//        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { liveValueLivesLeft ->
+//            binding.tvLivesLeft.text = getString(R.string.lives_left_stats, liveValueLivesLeft)
+//        })
+//
+//        // observing live data property associated with incorrectGuesses,
+//        viewModel.incorrectGuesses.observe(viewLifecycleOwner, Observer { liveValueIncorrectGuesses ->
+//            binding.tvIncorrectGuesses.text = getString(R.string.incorrect_guess_stats, liveValueIncorrectGuesses)
+//        })
+//
+//        // observing live data property associated with secretWordDisplay,
+//        viewModel.secretWordDisplay.observe(viewLifecycleOwner, Observer { liveValueSecretWordDisplay ->
+//            binding.tvWord.text = liveValueSecretWordDisplay
+//        })
 
         // observing live data property associated with gameOver,
         viewModel.gameOver.observe(viewLifecycleOwner, Observer { liveValueGameOver ->
-            Log.wtf("fail", "value of : $liveValueGameOver")
             if(liveValueGameOver) {
                 val wonLostMsg = getString(R.string.won_lost_message, viewModel.wonLostMessage(), viewModel.secretWord)
                 val action = GameFragmentDirections.actionGameFragmentToResultFragment(wonLostMsg)

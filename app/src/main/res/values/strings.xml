@@ -6,4 +6,5 @@
     <string name="lives_left_stats">You have %1$d lives left.</string>
     <string name="won_lost_message">You %1$s!! The correct word was %2$s.</string>
     <string name="result_fragment_done_btn_text">Play Again</string>
+    <string name="end_game">End Game</string>
 </resources>
