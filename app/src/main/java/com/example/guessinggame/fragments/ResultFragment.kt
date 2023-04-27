@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.guessinggame.databinding.FragmentResultBinding
 import com.example.guessinggame.viewmodels.ResultViewModel
 import com.example.guessinggame.viewmodels.factory.ResultViewModelFactory
@@ -43,10 +44,9 @@ class ResultFragment : Fragment() {
         // assigning layout variable resultViewModel with the viewModel,
         binding.resultViewModel = viewModel
         binding.btnPlayAgain.setOnClickListener {
-            val action = ResultFragmentDirections.actionResultFragmentToGameFragment()
-            val navController = binding.root.findNavController()
+            val action = ResultFragmentDirections.actionResultFragmentToGiveTextFragment()
+            val navController = findNavController()
             navController.navigate(action)
         }
-
     }
 }
