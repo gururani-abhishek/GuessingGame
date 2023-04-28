@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center|top"
+    android:layout_marginTop="50dp"
     android:layout_height="match_parent"
     tools:context=".fragments.GiveTextFragment">
 
@@ -108,10 +110,15 @@
         android:layout_margin="20dp"
         />
 
-    <Button
-        android:id="@+id/btn_start_game"
+    <com.ncorti.slidetoact.SlideToActView
+        android:id="@+id/start_slider"
         android:layout_width="wrap_content"
-        android:text="@string/btn_start_game_text"
-        android:layout_height="wrap_content"/>
+        app:text="Swipe"
+        app:text_size="18sp"
+        app:text_style="bold"
+        android:layout_height="60dp"
+        app:outer_color="#DCCECE"
+        app:inner_color="#9C27B0"
+        app:area_margin="2dp"/>
 
 </LinearLayout>

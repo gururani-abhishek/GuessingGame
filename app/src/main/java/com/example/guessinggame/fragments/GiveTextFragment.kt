@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.guessinggame.R
 import com.example.guessinggame.databinding.FragmentGiveTextBinding
+import com.ncorti.slidetoact.SlideToActView
 
 class GiveTextFragment : Fragment() {
     private var _binding : FragmentGiveTextBinding ?= null
@@ -29,20 +30,24 @@ class GiveTextFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         applyShakyAnimation(binding.llPrompt)
-        binding.btnStartGame.setOnClickListener {
-            if (binding.etInputWord.text.isNotEmpty()) {
-                val inputWord = binding.etInputWord.text.toString()
-                val action =
-                    GiveTextFragmentDirections.actionGiveTextFragmentToGameFragment(inputWord)
-                val navController = findNavController()
-                navController.navigate(action)
-            } else {
-                Toast.makeText(activity, "enter a guess word, please!!", Toast.LENGTH_SHORT).show()
-            }
-            binding.etInputWord.text = null
 
+        // this is a lib and it doesn't support binding, hence have to call findViewById
+        val slideToActView :SlideToActView = binding.root.findViewById(R.id.start_slider)
+        slideToActView.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener{
+            override fun onSlideComplete(view: SlideToActView) {
+                if (binding.etInputWord.text.isNotEmpty()) {
+                    val inputWord = binding.etInputWord.text.toString()
+                    val action =
+                        GiveTextFragmentDirections.actionGiveTextFragmentToGameFragment(inputWord)
+                    val navController = findNavController()
+                    navController.navigate(action)
+                } else slideToActView.resetSlider()
+
+                binding.etInputWord.text = null
+            }
         }
-    }
+
+ }
 
     private fun applyShakyAnimation(view : ViewGroup) {
         for(viewId in 0 until view.childCount) {

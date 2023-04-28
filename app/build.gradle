@@ -56,4 +56,7 @@ dependencies {
 
     // live data lib
     implementation "androidx.lifecycle:lifecycle-livedata-core-ktx:$lifecycle_version"
+
+    // sliding button lib
+    implementation "com.ncorti:slidetoact:0.10.0"
 }
