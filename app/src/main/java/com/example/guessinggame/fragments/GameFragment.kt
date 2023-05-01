@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,6 +16,7 @@ import com.example.guessinggame.R
 import com.example.guessinggame.databinding.FragmentGameBinding
 import com.example.guessinggame.viewmodels.GameViewModel
 import com.example.guessinggame.viewmodels.factory.GameViewModelFactory
+import com.ncorti.slidetoact.SlideToActView
 
 class GameFragment : Fragment() {
     private var _binding : FragmentGameBinding ?= null
@@ -41,13 +44,20 @@ class GameFragment : Fragment() {
 // "GameFragment is assigning it's instantiated viewModel to data binding variable gameViewModel"
         binding.gameViewModel = viewModel // assigning gameViewModel variable with instantiated viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        
+
+        val slideToActView : SlideToActView = binding.root.findViewById(R.id.start_slider)
+        slideToActView.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener{
+            override fun onSlideComplete(view: SlideToActView) {
+                viewModel.endGame()
+            }
+        }
+
+
+        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { liveValueLivesLeft ->
+            if(liveValueLivesLeft < 8) applyFade(binding.llLivesLeft, liveValueLivesLeft)
+        })
 
         // observing these values and updating them using data binding.
-//        // observing live data property associated with livesLeft,
-//        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { liveValueLivesLeft ->
-//            binding.tvLivesLeft.text = getString(R.string.lives_left_stats, liveValueLivesLeft)
-//        })
 //
 //        // observing live data property associated with incorrectGuesses,
 //        viewModel.incorrectGuesses.observe(viewLifecycleOwner, Observer { liveValueIncorrectGuesses ->
@@ -87,5 +97,24 @@ class GameFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun applyFade(parentView : ViewGroup, id : Int) {
+        val childView = parentView.getChildAt(id + 1)
+        val animationFadeOut = AnimationUtils.loadAnimation(activity, R.anim.fade)
+
+        animationFadeOut.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                childView.alpha = 0.2f
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {
+            }
+
+        })
+        childView.startAnimation(animationFadeOut)
     }
 }

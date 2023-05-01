@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">GuessingGame</string>
-    <string name="et_input_letter_hint">Guess a letter in the above word</string>
+    <string name="et_input_letter_hint">Make a Guess</string>
     <string name="bt_check_guess_hint">Guess!!</string>
     <string name="incorrect_guess_stats">Incorrect Guesses : %1$s</string>
-    <string name="lives_left_stats">You have %1$d lives left.</string>
+    <string name="lives_left">Lives :  </string>
     <string name="won_lost_message">You %1$s!! The correct word was %2$s.</string>
     <string name="result_fragment_done_btn_text">Play Again</string>
-    <string name="end_game">End Game</string>
+    <string name="end_game">I Quit</string>
     <string name="tv_give_word_desc">Give Your Friend a word to guess</string>
     <string name="btn_start_game_text">START GAME</string>
 </resources>
